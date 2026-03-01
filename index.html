@@ -1,9 +1,1053 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>ckieser.io</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Christoph Kieser — Automation & Systems Engineer. Terraform, Ansible, RHEL, DevOps. Based in Zurich.">
+  <title>Christoph Kieser — Systems & Automation Engineer</title>
+  <style>
+    /* ── Reset & Base ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0f172a;
+      --surface:  #1e293b;
+      --surface2: #273549;
+      --border:   #334155;
+      --accent:   #22d3ee;
+      --accent2:  #818cf8;
+      --text:     #f1f5f9;
+      --muted:    #94a3b8;
+      --radius:   10px;
+      --font-mono: 'Courier New', Courier, monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--accent); text-decoration: none; transition: color .2s; }
+    a:hover { color: #67e8f9; }
+
+    /* ── Noise / Grid Background ──────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(34,211,238,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34,211,238,.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Nav ──────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(15,23,42,.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-size: .9rem;
+      color: var(--accent);
+      letter-spacing: .05em;
+    }
+    .nav-logo span { color: var(--muted); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: .85rem;
+      color: var(--muted);
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--accent); }
+
+    /* ── Sections ─────────────────────────────────────────── */
+    section {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: .75rem;
+      color: var(--accent);
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      margin-bottom: .5rem;
+    }
+
+    h2.section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 3rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    h2.section-title::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -8px;
+      height: 3px;
+      width: 100%;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      border-radius: 2px;
+    }
+
+    /* ── Hero ─────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 60px;
+    }
+
+    .hero-intro {
+      font-family: var(--font-mono);
+      color: var(--accent);
+      font-size: .95rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-name {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+    }
+
+    .hero-title {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: var(--muted);
+      font-weight: 400;
+      margin-top: .5rem;
+    }
+
+    .hero-tagline {
+      margin-top: 1.5rem;
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .typing-wrap {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: var(--accent2);
+      margin-top: 1.2rem;
+      min-height: 2em;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background: var(--accent);
+      vertical-align: middle;
+      margin-left: 2px;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .hero-cta {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .7rem 1.5rem;
+      border-radius: var(--radius);
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+    }
+    .btn-primary:hover {
+      background: #67e8f9;
+      color: var(--bg);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+    .btn-outline:hover {
+      background: rgba(34,211,238,.1);
+      transform: translateY(-2px);
+    }
+
+    .hero-scroll {
+      margin-top: 4rem;
+      color: var(--muted);
+      font-size: .8rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    .hero-scroll .arrow {
+      animation: bounce 2s infinite;
+      display: inline-block;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+
+    /* ── About ────────────────────────────────────────────── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .about-text p strong { color: var(--text); }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      text-align: center;
+      transition: border-color .2s, transform .2s;
+    }
+
+    .stat-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .stat-num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent);
+      font-family: var(--font-mono);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: .78rem;
+      color: var(--muted);
+      margin-top: .4rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    /* ── Skills ───────────────────────────────────────────── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: border-color .2s;
+    }
+
+    .skill-group:hover { border-color: var(--accent); }
+
+    .skill-group-title {
+      font-size: .8rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--accent);
+      font-family: var(--font-mono);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+    }
+
+    .tag {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: .3rem .75rem;
+      font-size: .82rem;
+      color: var(--text);
+      transition: all .15s;
+    }
+
+    .tag:hover {
+      border-color: var(--accent2);
+      color: var(--accent2);
+    }
+
+    /* ── Experience ───────────────────────────────────────── */
+    .timeline { position: relative; }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 8px;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+    }
+
+    .tl-item {
+      position: relative;
+      padding-left: 2.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .tl-dot {
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--accent);
+      transition: background .2s;
+    }
+
+    .tl-item:hover .tl-dot { background: var(--accent); }
+
+    .tl-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: border-color .2s, transform .2s;
+    }
+
+    .tl-card:hover {
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    .tl-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-bottom: .75rem;
+    }
+
+    .tl-role {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .tl-company {
+      font-size: .9rem;
+      color: var(--accent);
+    }
+
+    .tl-period {
+      font-family: var(--font-mono);
+      font-size: .78rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .tl-bullets {
+      list-style: none;
+      margin-top: .75rem;
+    }
+
+    .tl-bullets li {
+      color: var(--muted);
+      font-size: .9rem;
+      padding-left: 1.2rem;
+      position: relative;
+      margin-bottom: .4rem;
+    }
+
+    .tl-bullets li::before {
+      content: '▹';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    /* ── Education & Certs ────────────────────────────────── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: border-color .2s, transform .2s;
+    }
+
+    .card:hover {
+      border-color: var(--accent2);
+      transform: translateY(-3px);
+    }
+
+    .card-icon {
+      font-size: 1.5rem;
+      margin-bottom: .75rem;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: .25rem;
+    }
+
+    .card-sub {
+      font-size: .85rem;
+      color: var(--accent2);
+      margin-bottom: .25rem;
+    }
+
+    .card-meta {
+      font-size: .8rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+    }
+
+    .cert-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      width: 100%;
+      margin-bottom: 1rem;
+      transition: border-color .2s, transform .2s;
+    }
+
+    .cert-badge:last-child { margin-bottom: 0; }
+
+    .cert-badge:hover {
+      border-color: var(--accent2);
+      transform: translateX(4px);
+    }
+
+    .cert-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .cert-icon.red { background: rgba(239,68,68,.15); }
+    .cert-icon.blue { background: rgba(129,140,248,.15); }
+
+    .cert-name {
+      font-size: .9rem;
+      font-weight: 600;
+    }
+
+    .cert-issuer {
+      font-size: .78rem;
+      color: var(--muted);
+    }
+
+    /* ── Languages ────────────────────────────────────────── */
+    .lang-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: .75rem;
+    }
+
+    .lang-name {
+      width: 80px;
+      font-size: .9rem;
+    }
+
+    .lang-bar-wrap {
+      flex: 1;
+      height: 6px;
+      background: var(--surface2);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .lang-bar {
+      height: 100%;
+      border-radius: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      width: 0;
+      transition: width 1.2s ease;
+    }
+
+    .lang-level {
+      font-size: .78rem;
+      color: var(--muted);
+      width: 130px;
+      text-align: right;
+      font-family: var(--font-mono);
+    }
+
+    /* ── Contact ──────────────────────────────────────────── */
+    #contact {
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-sub {
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      color: var(--muted);
+      font-size: .9rem;
+      transition: color .2s;
+    }
+
+    .contact-link:hover { color: var(--accent); }
+
+    .contact-link svg {
+      width: 20px; height: 20px;
+      fill: currentColor;
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: .8rem;
+      border-top: 1px solid var(--border);
+    }
+
+    footer span { color: var(--accent); }
+
+    /* ── Scroll reveal ────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── Mobile ───────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+
+      .about-grid  { grid-template-columns: 1fr; }
+      .two-col     { grid-template-columns: 1fr; }
+
+      .hero-cta { flex-direction: column; }
+
+      .tl-header { flex-direction: column; }
+    }
+
+    @media (max-width: 480px) {
+      .about-stats { grid-template-columns: 1fr 1fr; }
+      section { padding: 4rem 1.25rem; }
+    }
+
+    /* ── Glow pulse on accent elements ────────────────────── */
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 8px rgba(34,211,238,.3); }
+      50%       { box-shadow: 0 0 20px rgba(34,211,238,.6); }
+    }
+
+    .tl-dot { animation: glow 3s ease-in-out infinite; }
+  </style>
 </head>
 <body>
-    <h1>ckieser.io</h1>
+
+  <!-- ── Navigation ──────────────────────────────────────── -->
+  <nav>
+    <div class="nav-logo"><span>~/</span>ckieser</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Hero ────────────────────────────────────────────── -->
+  <section id="hero">
+    <p class="hero-intro">$ whoami</p>
+    <h1 class="hero-name">Christoph Kieser</h1>
+    <p class="hero-title">Systems &amp; Automation Engineer</p>
+    <div class="typing-wrap" id="typing-text"></div><span class="cursor"></span>
+    <p class="hero-tagline">
+      Turning complex infrastructure into scalable, reliable, and fully automated platforms —
+      with a decade of experience in the financial industry.
+    </p>
+    <div class="hero-cta">
+      <a href="#experience" class="btn btn-primary">View Experience</a>
+      <a href="mailto:mail@christophkieser.ch" class="btn btn-outline">Get in Touch</a>
+    </div>
+    <p class="hero-scroll">scroll down <span class="arrow">↓</span></p>
+  </section>
+
+  <!-- ── About ────────────────────────────────────────────── -->
+  <section id="about" class="reveal">
+    <p class="section-label">// about</p>
+    <h2 class="section-title">About Me</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm an <strong>Automation &amp; System Engineer</strong> with a passion for turning complex
+          infrastructure into scalable, reliable, and fully automated platforms. Over the past decade —
+          primarily in the <strong>financial industry</strong> — I've built and operated Linux-based
+          environments and designed end-to-end automation solutions.
+        </p>
+        <p>
+          My work spans <strong>Terraform/OpenTofu</strong> provider and module development,
+          <strong>Ansible &amp; AAP</strong> automation, containerization, virtualization, and
+          lifecycle management of large-scale Red Hat environments.
+        </p>
+        <p>
+          I enjoy creating clarity: standardised processes, clean architectures, strong documentation,
+          and smooth collaboration across teams. Currently based in <strong>Zürich, Switzerland</strong>.
+        </p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card">
+          <div class="stat-num">10+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">6+</div>
+          <div class="stat-label">Years at SIX</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">IaC</div>
+          <div class="stat-label">Primary Focus</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">RHEL</div>
+          <div class="stat-label">Core Platform</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Skills ────────────────────────────────────────────── -->
+  <section id="skills" class="reveal">
+    <p class="section-label">// skills</p>
+    <h2 class="section-title">Tech Stack</h2>
+    <div class="skills-grid">
+
+      <div class="skill-group">
+        <div class="skill-group-title">⬡ Infrastructure as Code</div>
+        <div class="skill-tags">
+          <span class="tag">Terraform</span>
+          <span class="tag">OpenTofu</span>
+          <span class="tag">Provider Dev</span>
+          <span class="tag">Module Design</span>
+          <span class="tag">GitOps</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">⚙ Configuration Management</div>
+        <div class="skill-tags">
+          <span class="tag">Ansible</span>
+          <span class="tag">AAP</span>
+          <span class="tag">SaltStack</span>
+          <span class="tag">CaC</span>
+          <span class="tag">Idempotency</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">🐧 Linux &amp; Platform</div>
+        <div class="skill-tags">
+          <span class="tag">RHEL</span>
+          <span class="tag">Red Hat Satellite</span>
+          <span class="tag">Patch Mgmt</span>
+          <span class="tag">OS Lifecycle</span>
+          <span class="tag">ITIL</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">📦 Containers &amp; Virtualisation</div>
+        <div class="skill-tags">
+          <span class="tag">Podman</span>
+          <span class="tag">Docker</span>
+          <span class="tag">Red Hat Virtualisation</span>
+          <span class="tag">Cisco UCS</span>
+          <span class="tag">OpenShift</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">💻 Scripting &amp; Dev</div>
+        <div class="skill-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Bash</span>
+          <span class="tag">YAML</span>
+          <span class="tag">HCL</span>
+          <span class="tag">Jinja2</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">🔄 DevOps Practices</div>
+        <div class="skill-tags">
+          <span class="tag">CI/CD</span>
+          <span class="tag">GitLab</span>
+          <span class="tag">DevOps</span>
+          <span class="tag">Architecture Review</span>
+          <span class="tag">Documentation</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Experience ────────────────────────────────────────── -->
+  <section id="experience" class="reveal">
+    <p class="section-label">// experience</p>
+    <h2 class="section-title">Career</h2>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-header">
+            <div>
+              <div class="tl-role">System Engineer Automation</div>
+              <div class="tl-company">SIX — Zürich</div>
+            </div>
+            <div class="tl-period">Jan 2024 – Present</div>
+          </div>
+          <ul class="tl-bullets">
+            <li>Developed Terraform/OpenTofu modules for on-premises infrastructure at scale</li>
+            <li>Launched a pilot enabling Infrastructure as Code and Configuration as Code for SIX on-premises infrastructure</li>
+            <li>Contributed to shaping and reviewing architecture documents and establishing automation standards</li>
+            <li>Integrated DevOps best practices, enhancing dev–ops collaboration and improving infrastructure scalability</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-header">
+            <div>
+              <div class="tl-role">Linux System Engineer</div>
+              <div class="tl-company">SIX — Zürich</div>
+            </div>
+            <div class="tl-period">Sep 2019 – Jan 2024</div>
+          </div>
+          <ul class="tl-bullets">
+            <li>Designed and implemented automation for OS deployment, patch management, and app configuration using Ansible, AAP, SaltStack, Python, and Bash</li>
+            <li>Managed the full Linux OS content lifecycle — planning, updates, and compliance — via Red Hat Satellite</li>
+            <li>Ensured stability, security, and performance of RHEL server infrastructure</li>
+            <li>Led incident, problem, change, and capacity management in alignment with ITIL best practices</li>
+            <li>Authored and maintained technical documentation for internal teams and external stakeholders</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-header">
+            <div>
+              <div class="tl-role">System Engineer</div>
+              <div class="tl-company">SWITCH — Zürich</div>
+            </div>
+            <div class="tl-period">Mar 2016 – Aug 2019</div>
+          </div>
+          <ul class="tl-bullets">
+            <li>Built and operated a Cisco UCS and Red Hat Virtualisation-based server infrastructure for internal customers</li>
+            <li>Responsible for the operation and further development of the back-end of a web platform for internal and external sites</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-header">
+            <div>
+              <div class="tl-role">Junior System Engineer</div>
+              <div class="tl-company">btnet GmbH — Zürich</div>
+            </div>
+            <div class="tl-period">Jan 2011 – Apr 2012</div>
+          </div>
+          <ul class="tl-bullets">
+            <li>Periodic maintenance of servers and clients; monitoring of data backups and server services</li>
+            <li>Installation and configuration of hardware and software; handling of warranty and repair cases</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Education & Certs ──────────────────────────────────── -->
+  <section id="education" class="reveal">
+    <p class="section-label">// education &amp; certs</p>
+    <h2 class="section-title">Qualifications</h2>
+
+    <div class="two-col">
+      <!-- Education -->
+      <div>
+        <div class="card" style="margin-bottom:1rem;">
+          <div class="card-icon">🎓</div>
+          <div class="card-title">Bachelor of Science ZFH in Informatik</div>
+          <div class="card-sub">Service Engineering</div>
+          <div class="card-meta">ZHAW School of Engineering · 2012 – 2015</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">📚</div>
+          <div class="card-title">Fachmaturität</div>
+          <div class="card-sub">Kommunikation und Information</div>
+          <div class="card-meta">Freie Schule Zürich · 2007 – 2011</div>
+        </div>
+
+        <!-- Languages -->
+        <div style="margin-top:2rem;">
+          <h3 style="font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:1.2rem;font-family:var(--font-mono);">Languages</h3>
+
+          <div class="lang-row">
+            <span class="lang-name">German</span>
+            <div class="lang-bar-wrap">
+              <div class="lang-bar" data-width="100"></div>
+            </div>
+            <span class="lang-level">Native / Bilingual</span>
+          </div>
+          <div class="lang-row">
+            <span class="lang-name">English</span>
+            <div class="lang-bar-wrap">
+              <div class="lang-bar" data-width="90"></div>
+            </div>
+            <span class="lang-level">Full Professional</span>
+          </div>
+          <div class="lang-row">
+            <span class="lang-name">French</span>
+            <div class="lang-bar-wrap">
+              <div class="lang-bar" data-width="30"></div>
+            </div>
+            <span class="lang-level">Elementary</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Certifications -->
+      <div>
+        <h3 style="font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:1.2rem;font-family:var(--font-mono);">Certifications</h3>
+
+        <div class="cert-badge">
+          <div class="cert-icon red">🎯</div>
+          <div>
+            <div class="cert-name">Red Hat Certified OpenShift Application Developer</div>
+            <div class="cert-issuer">Red Hat</div>
+          </div>
+        </div>
+
+        <div class="cert-badge">
+          <div class="cert-icon blue">🔷</div>
+          <div>
+            <div class="cert-name">DevOps Foundation</div>
+            <div class="cert-issuer">DevOps Institute</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Contact ─────────────────────────────────────────────── -->
+  <section id="contact" class="reveal">
+    <p class="section-label">// contact</p>
+    <h2 class="section-title">Get In Touch</h2>
+    <p class="contact-sub">
+      Open to interesting conversations about automation, DevOps, infrastructure engineering, or
+      new opportunities. Feel free to reach out.
+    </p>
+    <div class="contact-links">
+
+      <a href="mailto:mail@christophkieser.ch" class="contact-link">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+        mail@christophkieser.ch
+      </a>
+
+      <a href="https://www.linkedin.com/in/ckieser" target="_blank" rel="noopener" class="contact-link">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+        linkedin.com/in/ckieser
+      </a>
+
+    </div>
+  </section>
+
+  <footer>
+    Built with vanilla HTML/CSS/JS &nbsp;·&nbsp; Hosted on <span>GitHub Pages</span> &nbsp;·&nbsp; Christoph Kieser © 2026
+  </footer>
+
+  <script>
+    // ── Typing animation ──────────────────────────────────────
+    const phrases = [
+      'terraform apply',
+      'ansible-playbook site.yml',
+      'git commit -m "automate everything"',
+      'systemctl restart reliability',
+      'echo "IaC > ClickOps"',
+    ];
+    let pi = 0, ci = 0, deleting = false;
+    const el = document.getElementById('typing-text');
+
+    function type() {
+      const phrase = phrases[pi];
+      if (!deleting) {
+        el.textContent = '$ ' + phrase.slice(0, ci + 1);
+        ci++;
+        if (ci === phrase.length) {
+          deleting = true;
+          setTimeout(type, 1800);
+          return;
+        }
+      } else {
+        el.textContent = '$ ' + phrase.slice(0, ci - 1);
+        ci--;
+        if (ci === 0) {
+          deleting = false;
+          pi = (pi + 1) % phrases.length;
+        }
+      }
+      setTimeout(type, deleting ? 40 : 75);
+    }
+    type();
+
+    // ── Scroll reveal ─────────────────────────────────────────
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ── Language bars (animate on scroll) ─────────────────────
+    const barObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.lang-bar').forEach(bar => {
+            bar.style.width = bar.dataset.width + '%';
+          });
+          barObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    const langSection = document.querySelector('#education');
+    if (langSection) barObserver.observe(langSection);
+
+    // ── Active nav highlight ───────────────────────────────────
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navLinks.forEach(a => a.classList.remove('active'));
+          const active = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+
+    sections.forEach(s => navObserver.observe(s));
+  </script>
 </body>
 </html>
