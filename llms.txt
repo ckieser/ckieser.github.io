@@ -1,0 +1,53 @@
+# Christoph Kieser
+
+> Automation & Systems Engineer based in Zürich, Switzerland. 10+ years building scalable, reliable Linux infrastructure — primarily in the financial industry.
+
+## Identity
+
+- Full name: Christoph Kieser
+- Location: Zürich, Switzerland
+- Email: mail@christophkieser.ch
+- LinkedIn: https://www.linkedin.com/in/ckieser
+- Website: https://christophkieser.ch
+- Certification ID (Red Hat): 160-209-045
+
+## Current Role
+
+System Engineer Automation at SIX (January 2024 – present)
+- Develops Terraform/OpenTofu modules for on-premises infrastructure
+- Piloted Infrastructure as Code (IaC) and Configuration as Code (CaC) adoption at SIX
+- Establishes automation standards and contributes to architecture reviews
+- Integrates DevOps best practices across development and operations teams
+
+## Career History
+
+- SIX — Linux System Engineer (Sep 2019 – Jan 2024, Zürich)
+- SWITCH — System Engineer (Mar 2016 – Aug 2019, Zürich)
+- btnet GmbH — Junior System Engineer (Jan 2011 – Apr 2012, Zürich)
+
+## Core Skills
+
+Infrastructure as Code: Terraform, OpenTofu, HCL, GitOps, module and provider development
+Configuration Management: Ansible, Ansible Automation Platform (AAP), SaltStack
+Operating Systems: Red Hat Enterprise Linux (RHEL), Red Hat Satellite, OS lifecycle management
+Containers & Virtualisation: OpenShift, Podman, Docker, Red Hat Virtualisation, Cisco UCS
+Scripting: Python, Bash, YAML, Jinja2
+Practices: DevOps, CI/CD, ITIL, architecture review, technical documentation
+
+## Active Certifications
+
+- Red Hat Certified OpenShift Application Developer — valid Aug 2025 – Aug 2028
+- Red Hat Certified Engineer (RHCE) — valid Feb 2019 – Aug 2028
+- Red Hat Certified System Administrator (RHCSA) — valid Feb 2019 – Aug 2028
+- DevOps Foundation (DevOps Institute) — valid Apr 2024 – Apr 2027
+
+## Education
+
+- Bachelor of Science ZFH in Informatik, Service Engineering — ZHAW School of Engineering (2012–2015)
+- Fachmaturität, Kommunikation und Information — Freie Schule Zürich (2007–2011)
+
+## Languages
+
+- German: Native / Bilingual
+- English: Full Professional
+- French: Elementary
