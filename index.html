@@ -241,6 +241,40 @@
       50% { transform: translateY(6px); }
     }
 
+    /* ── Hero photo ────────────────────────────────────────── */
+    .hero-inner {
+      display: flex;
+      align-items: center;
+      gap: 4rem;
+    }
+
+    .hero-left { flex: 1; min-width: 0; }
+
+    .hero-photo-wrap {
+      flex-shrink: 0;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      animation: photo-glow 4s ease-in-out infinite;
+    }
+
+    @keyframes photo-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(34,211,238,.2); }
+      50%       { box-shadow: 0 0 50px rgba(34,211,238,.45), 0 0 80px rgba(129,140,248,.15); }
+    }
+
+    .hero-photo {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      border: 4px solid var(--bg);
+      display: block;
+    }
+
     /* ── About ────────────────────────────────────────────── */
     .about-grid {
       display: grid;
@@ -619,7 +653,16 @@
       .about-grid  { grid-template-columns: 1fr; }
       .two-col     { grid-template-columns: 1fr; }
 
-      .hero-cta { flex-direction: column; }
+      .hero-inner {
+        flex-direction: column-reverse;
+        text-align: center;
+        gap: 2.5rem;
+      }
+      .hero-tagline { margin-left: auto; margin-right: auto; }
+      .hero-cta     { justify-content: center; flex-direction: column; align-items: center; }
+      .hero-scroll  { justify-content: center; }
+
+      .hero-photo-wrap { width: 180px; height: 180px; }
 
       .tl-header { flex-direction: column; }
     }
@@ -654,19 +697,26 @@
 
   <!-- ── Hero ────────────────────────────────────────────── -->
   <section id="hero">
-    <p class="hero-intro">$ whoami</p>
-    <h1 class="hero-name">Christoph Kieser</h1>
-    <p class="hero-title">Systems &amp; Automation Engineer</p>
-    <div class="typing-wrap" id="typing-text"></div><span class="cursor"></span>
-    <p class="hero-tagline">
-      Turning complex infrastructure into scalable, reliable, and fully automated platforms —
-      with a decade of experience in the financial industry.
-    </p>
-    <div class="hero-cta">
-      <a href="#experience" class="btn btn-primary">View Experience</a>
-      <a href="mailto:mail@christophkieser.ch" class="btn btn-outline">Get in Touch</a>
+    <div class="hero-inner">
+      <div class="hero-left">
+        <p class="hero-intro">$ whoami</p>
+        <h1 class="hero-name">Christoph Kieser</h1>
+        <p class="hero-title">Systems &amp; Automation Engineer</p>
+        <div class="typing-wrap" id="typing-text"></div><span class="cursor"></span>
+        <p class="hero-tagline">
+          Turning complex infrastructure into scalable, reliable, and fully automated platforms —
+          with a decade of experience in the financial industry.
+        </p>
+        <div class="hero-cta">
+          <a href="#experience" class="btn btn-primary">View Experience</a>
+          <a href="mailto:mail@christophkieser.ch" class="btn btn-outline">Get in Touch</a>
+        </div>
+        <p class="hero-scroll">scroll down <span class="arrow">↓</span></p>
+      </div>
+      <div class="hero-photo-wrap">
+        <img src="photo.jpg" alt="Christoph Kieser" class="hero-photo">
+      </div>
     </div>
-    <p class="hero-scroll">scroll down <span class="arrow">↓</span></p>
   </section>
 
   <!-- ── About ────────────────────────────────────────────── -->
