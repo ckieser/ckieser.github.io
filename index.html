@@ -507,24 +507,27 @@
       font-family: var(--font-mono);
     }
 
+    .certs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
     .cert-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: .75rem;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 1rem 1.25rem;
-      width: 100%;
-      margin-bottom: 1rem;
       transition: border-color .2s, transform .2s;
     }
 
-    .cert-badge:last-child { margin-bottom: 0; }
-
     .cert-badge:hover {
       border-color: var(--accent2);
-      transform: translateX(4px);
+      transform: translateY(-2px);
     }
 
     .cert-icon {
@@ -536,19 +539,53 @@
       justify-content: center;
       font-size: 1.1rem;
       flex-shrink: 0;
+      margin-top: 2px;
     }
 
-    .cert-icon.red { background: rgba(239,68,68,.15); }
+    .cert-icon.red  { background: rgba(239,68,68,.15); }
     .cert-icon.blue { background: rgba(129,140,248,.15); }
 
+    .cert-body { flex: 1; min-width: 0; }
+
     .cert-name {
-      font-size: .9rem;
+      font-size: .88rem;
       font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .cert-meta {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      flex-wrap: wrap;
+      margin-top: .35rem;
     }
 
     .cert-issuer {
-      font-size: .78rem;
+      font-size: .75rem;
       color: var(--muted);
+    }
+
+    .cert-date {
+      font-size: .72rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+    }
+
+    .cert-status {
+      font-size: .68rem;
+      font-weight: 700;
+      padding: .1rem .45rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .cert-status.active   { background: rgba(34,197,94,.15); color: #4ade80; }
+    .cert-status.expired  { background: rgba(148,163,184,.1); color: var(--muted); }
+
+    @media (max-width: 640px) {
+      .certs-grid { grid-template-columns: 1fr; }
     }
 
     /* ── Languages ────────────────────────────────────────── */
@@ -769,7 +806,7 @@
     <div class="skills-grid">
 
       <div class="skill-group">
-        <div class="skill-group-title">⬡ Infrastructure as Code</div>
+        <div class="skill-group-title">🏗️ Infrastructure as Code</div>
         <div class="skill-tags">
           <span class="tag">Terraform</span>
           <span class="tag">OpenTofu</span>
@@ -780,7 +817,7 @@
       </div>
 
       <div class="skill-group">
-        <div class="skill-group-title">⚙ Configuration Management</div>
+        <div class="skill-group-title">🔧 Configuration Management</div>
         <div class="skill-tags">
           <span class="tag">Ansible</span>
           <span class="tag">AAP</span>
@@ -968,26 +1005,84 @@
         </div>
       </div>
 
-      <!-- Certifications -->
-      <div>
-        <h3 style="font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:1.2rem;font-family:var(--font-mono);">Certifications</h3>
+    </div>
 
-        <div class="cert-badge">
-          <div class="cert-icon red">🎯</div>
-          <div>
-            <div class="cert-name">Red Hat Certified OpenShift Application Developer</div>
-            <div class="cert-issuer">Red Hat</div>
-          </div>
-        </div>
+    <!-- Certifications (full-width) -->
+    <h3 style="font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-top:3rem;margin-bottom:0;font-family:var(--font-mono);">Certifications</h3>
+    <div class="certs-grid">
 
-        <div class="cert-badge">
-          <div class="cert-icon blue">🔷</div>
-          <div>
-            <div class="cert-name">DevOps Foundation</div>
-            <div class="cert-issuer">DevOps Institute</div>
+      <div class="cert-badge">
+        <div class="cert-icon red">🎓</div>
+        <div class="cert-body">
+          <div class="cert-name">Red Hat Certified OpenShift Application Developer</div>
+          <div class="cert-meta">
+            <span class="cert-issuer">Red Hat</span>
+            <span class="cert-date">Aug 2025 – Aug 2028</span>
+            <span class="cert-status active">Active</span>
           </div>
         </div>
       </div>
+
+      <div class="cert-badge">
+        <div class="cert-icon blue">🔷</div>
+        <div class="cert-body">
+          <div class="cert-name">DevOps Foundation</div>
+          <div class="cert-meta">
+            <span class="cert-issuer">DevOps Institute</span>
+            <span class="cert-date">Apr 2024 – Apr 2027</span>
+            <span class="cert-status active">Active</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cert-badge">
+        <div class="cert-icon red">🎓</div>
+        <div class="cert-body">
+          <div class="cert-name">Red Hat® Certified Engineer (RHCE®)</div>
+          <div class="cert-meta">
+            <span class="cert-issuer">Red Hat</span>
+            <span class="cert-date">Feb 2019 – Aug 2028</span>
+            <span class="cert-status active">Active</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cert-badge">
+        <div class="cert-icon red">🎓</div>
+        <div class="cert-body">
+          <div class="cert-name">Red Hat® Certified System Administrator (RHCSA®)</div>
+          <div class="cert-meta">
+            <span class="cert-issuer">Red Hat</span>
+            <span class="cert-date">Feb 2019 – Aug 2028</span>
+            <span class="cert-status active">Active</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cert-badge">
+        <div class="cert-icon red">🎓</div>
+        <div class="cert-body">
+          <div class="cert-name">Red Hat® Certified Specialist in Containers and Kubernetes</div>
+          <div class="cert-meta">
+            <span class="cert-issuer">Red Hat</span>
+            <span class="cert-date">Jan 2022 – Jan 2025</span>
+            <span class="cert-status expired">Expired</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cert-badge">
+        <div class="cert-icon red">🎓</div>
+        <div class="cert-body">
+          <div class="cert-name">Red Hat® Certified Specialist in Deployment and Systems Management</div>
+          <div class="cert-meta">
+            <span class="cert-issuer">Red Hat</span>
+            <span class="cert-date">Sep 2020 – Sep 2023</span>
+            <span class="cert-status expired">Expired</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
