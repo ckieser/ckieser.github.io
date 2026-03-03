@@ -6,7 +6,6 @@
 
 - Full name: Christoph Kieser
 - Location: Zürich, Switzerland
-- Email: mail@christophkieser.ch
 - LinkedIn: https://www.linkedin.com/in/ckieser
 - Website: https://christophkieser.ch
 - Certification ID (Red Hat): 160-209-045
